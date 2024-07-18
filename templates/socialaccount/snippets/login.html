@@ -6,8 +6,10 @@
     {% if not SOCIALACCOUNT_ONLY %}
         {% element hr %}
         {% endelement %}
-        {% element h2 %}
+        {% element h3 class="text-center text-warning" %}
             {% translate "Or use a third-party" %}
+        {% endelement %}
+        {% element hr %}
         {% endelement %}
     {% endif %}
     {% include "socialaccount/snippets/provider_list.html" with process="login" %}

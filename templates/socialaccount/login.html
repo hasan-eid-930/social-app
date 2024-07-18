@@ -13,7 +13,7 @@
             {% blocktrans with provider.name as provider %}You are about to connect a new third-party account from {{ provider }}.{% endblocktrans %}
         {% endelement %}
     {% else %}
-        {% element h1 %}
+        {% element h2 %}
             {% blocktrans with provider.name as provider %}Sign In Via {{ provider }}{% endblocktrans %}
         {% endelement %}
         {% element p %}
@@ -23,7 +23,7 @@
     {% element form method="post" no_visible_fields=True %}
         {% slot actions %}
             {% csrf_token %}
-            {% element button type="submit" %}
+            {% element button type="submit" tags="success" %}
                 {% trans "Continue" %}
             {% endelement %}
         {% endslot %}

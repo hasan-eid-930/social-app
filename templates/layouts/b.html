@@ -2,9 +2,11 @@
 
 {% block layout %}
     
-    <div class="card mx-auto border border-1">
-        {% block content %}
-        {% endblock content %}
+    <div class="d-flex" >
+        <div class="mx-auto bg-body-tertiary border border-1 rounded-3 mt-5 p-3 ">
+            {% block content %}
+            {% endblock content %}
+        </div>
     </div>
 
 {% endblock layout %}
