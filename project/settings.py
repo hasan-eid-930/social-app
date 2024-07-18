@@ -40,17 +40,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'django.contrib.sites',
     'allauth',
     'allauth.account',
 
     # used for login with social accounts
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google',
-
+    'allauth.socialaccount.providers.telegram',
+    'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.twitter_oauth2',
+    'posts',
 ]
-
+# SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -76,8 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # `allauth` needs this from django
-                'django.template.context_processors.request',
+                
             ],
         },
     },
@@ -156,7 +159,7 @@ if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
     }
 # used in development
 else:
-    MEDIA_ROOT = BASE_DIR / 'media'
+    MEDIA_ROOT =os.path.join(BASE_DIR , "media")
 
 
 
@@ -169,14 +172,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        'APP': {
-            'client_id': '123',
-            'secret': '456',
-            'key': ''
-        }
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        },
+        'OAUTH_PKCE_ENABLED': True,
     }
 }
 AUTHENTICATION_BACKENDS = [
@@ -186,3 +189,27 @@ AUTHENTICATION_BACKENDS = [
     # `allauth` specific authentication methods, such as login by email
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+# LOGIN_REDIRECT_URL = '/'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True: 
+#     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    # EMAIL_HOST = 'smtp.gmail.com'
+    # EMAIL_HOST_USER = env('EMAIL_ADDRESS')
+    # EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') 
+    # EMAIL_PORT = 587
+    # EMAIL_USE_TLS = True
+    # DEFAULT_FROM_EMAIL = f'Awesome {env("EMAIL_ADDRESS")}'
+    # ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
+# else:
+#     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# login redirect url
+LOGIN_REDIRECT_URL = '/'
+# used if we need authentication using email
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+
+# ACCOUNT_LOGOUT_ON_GET = True

@@ -1,0 +1,32 @@
+{% load i18n %}
+<nav class="navbar navbar-expand-md fixed-top bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand text-warning" href="{% url "home" %}">Social App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#home-navbar-content" aria-controls="home-navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="home-navbar-content">
+        <div class="navbar-nav ms-auto me-2 mb-2 mb-md-0">
+            <a class="nav-link active" aria-current="page" href="{% url "home" %}">Home</a>
+            <a class="nav-link" href="#">About</a>
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Settings
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
+          </div>
+          {% if user.is_authenticated %}
+            <a class='btn btn-outline-danger' href="{% url "account_logout" %}">{% trans "Logout" %}</a>
+          {% else %}
+            <a class='btn btn-outline-success me-md-2' href="{% url 'account_login' %}">{% trans "Login" %} </a>
+            <a class='btn btn-outline-success' href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
+          {% endif %}
+      </div>
+    </div>
+</nav>
