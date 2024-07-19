@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block layout %}
+    
+    <div class="d-flex" >
+        <div class="mx-auto col-sm-6 bg-body-tertiary border border-1 rounded-3 mt-5 p-3 ">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+
+{% endblock layout %}

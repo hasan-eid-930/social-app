@@ -1,0 +1,5 @@
+{% load allauth %}
+<strong class="badge rounded-pill text-bg-{% if "danger" in attrs.tags %}danger{% elif "success" in attrs.tags %}success{% elif "warning" in attrs.tags %}warning {% else %}primary{% endif %}">
+    {% slot %}
+    {% endslot %}
+</strong>

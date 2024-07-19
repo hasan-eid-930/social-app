@@ -1,0 +1,9 @@
+
+    <a class="btn btn-success d-block mb-2 " title="{{ attrs.name }}" href="{{ attrs.href }}">
+        {% if attrs.name == 'GitHub' %}
+            <i class="bi bi-github me-2"></i>
+        {% elif  attrs.name == 'Google' %}
+            <i class="bi bi-google me-2"></i>
+        {% endif %}
+        {{ attrs.name }}
+    </a>
