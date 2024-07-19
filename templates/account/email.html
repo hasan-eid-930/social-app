@@ -1,12 +1,13 @@
 {% extends "account/base_manage_email.html" %}
 {% load allauth i18n %}
 {% block head_title %}
-    {% trans "Email Addresses" %}
+    {% trans "Email Addresses | " %}
 {% endblock head_title %}
 {% block content %}
-    {% element h1 %}
+    {% element h4 %}
         {% trans "Email Addresses" %}
     {% endelement %}
+    {% element hr %}{% endelement %}
     {% if emailaddresses %}
         {% element p %}
             {% trans 'The following email addresses are associated with your account:' %}
@@ -46,7 +47,7 @@
                 {% element button tags="secondary" type="submit" name="action_send" %}
                     {% trans 'Re-send Verification' %}
                 {% endelement %}
-                {% element button tags="danger,delete" type="submit" name="action_remove" %}
+                {% element button tags="tool,danger,delete" type="submit" name="action_remove" %}
                     {% trans 'Remove' %}
                 {% endelement %}
             {% endslot %}
@@ -54,15 +55,17 @@
     {% else %}
         {% include "account/snippets/warn_no_email.html" %}
     {% endif %}
+    {% element hr %}{% endelement %}
     {% if can_add_email %}
-        {% element h2 %}
+        {% element h5 %}
             {% trans "Add Email Address" %}
         {% endelement %}
+        {% element hr %}{% endelement %}
         {% url 'account_email' as action_url %}
         {% element form form=form method="post" action=action_url tags="email,add" %}
             {% slot body %}
                 {% csrf_token %}
-                {% element fields form=form %}
+                {% element fields form=form unlabeled=True %}
                 {% endelement %}
             {% endslot %}
             {% slot actions %}

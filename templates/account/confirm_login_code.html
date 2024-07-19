@@ -2,12 +2,13 @@
 {% load i18n %}
 {% load allauth account %}
 {% block head_title %}
-    {% translate "Sign In |" %}
+    {% translate "Sign In | " %}
 {% endblock head_title %}
 {% block content %}
-    {% element h1 %}
+    {% element h4 %}
         {% translate "Enter Sign-In Code" %}
     {% endelement %}
+    {% element hr %}{% endelement %}
     {% setvar email_link %}
         <a href="mailto:{{ email }}">{{ email }}</a>
     {% endsetvar %}

@@ -1,12 +1,13 @@
 {% extends "account/base_manage.html" %}
 {% load allauth i18n %}
 {% block head_title %}
-    {% trans "Sign Out" %}
+    {% trans "Sign Out | " %}
 {% endblock head_title %}
 {% block content %}
-    {% element h2 %}
+    {% element h4 %}
         {% trans "Sign Out" %}
     {% endelement %}
+    {% element hr %}{% endelement %}
     {% element p %}
         {% trans 'Are you sure you want to sign out?' %}
     {% endelement %}

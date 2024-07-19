@@ -5,9 +5,10 @@
     {% translate "Sign In" %}
 {% endblock head_title %}
 {% block content %}
-    {% element h1 %}
+    {% element h4 %}
         {% translate "Mail me a sign-in code" %}
     {% endelement %}
+    {% element hr %}{% endelement %}
     {% element p %}
         {% blocktranslate %}You will receive an email containing a special code for a password-free sign-in.{% endblocktranslate %}
     {% endelement %}

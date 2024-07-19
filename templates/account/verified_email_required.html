@@ -2,12 +2,13 @@
 {% load i18n %}
 {% load allauth %}
 {% block head_title %}
-    {% trans "Verify Your Email Address" %}
+    {% trans "Verify Your Email Address | " %}
 {% endblock head_title %}
 {% block content %}
-    {% element h1 %}
+    {% element h4 %}
         {% trans "Verify Your Email Address" %}
     {% endelement %}
+    {% element hr %}{% endelement %}
     {% url 'account_email' as email_url %}
     {% element p %}
         {% blocktrans %}This part of the site requires us to verify that
