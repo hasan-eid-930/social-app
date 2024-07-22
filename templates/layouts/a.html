@@ -3,8 +3,9 @@
 {% block layout %}
     {% include "includes/sidebar.html" %}
     {% include "includes/hero.html" %}
-    {% block content %}
-
-    {% endblock content %}
+    <div class="mx-auto col-sm-6 ">
+        {% block content %}
+        {% endblock content %}
+    </div>
 
 {% endblock layout %}

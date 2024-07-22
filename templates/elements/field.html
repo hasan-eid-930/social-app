@@ -1,0 +1,69 @@
+{% if type == "checkbox" or type == "radio" %}
+    <div class="form-check mb-3 row">
+        <label class="form-check-label col-md-3" for="{{ id }}">
+            {{field.label}}
+        </label>
+        <div class="col-md-9">
+            <input {% if required %}required{% endif %}
+               name="{{ name }}"
+               class=""
+               id="{{ id }}"
+               {% if value is not None %}value="{{ value }}"{% endif %}
+               {% if disabled %}disabled{% endif %}
+               type="{{ type }}">
+        </div>
+        {% if help_text %}
+            <div class="form-text">
+                {{field.help_text}}
+            </div>
+        {% endif %}
+    </div>
+{% elif field.field.widget.attrs.textarea %}
+    <div class="row mb-3">
+        <label class="form-label col-md-3" for="{{ id }}">
+            {{field.label}}
+        </label>
+        <div class="col-md-9">
+            <textarea {% if required %}required{% endif %}
+                    {% if placeholder %}placeholder="{{placeholder}}" {% endif %}
+                    {% if rows %}rows="{{ rows }}"{% endif %}
+                    class="form-control"
+                    name="{{ name }}"
+                    {% if readonly %}readonly{% endif %}
+                    id="{{ id }}"
+                    {% if disabled %}disabled{% endif %}>
+                {% if value %}{{value}}{% endif %}
+                </textarea>
+        </div>
+    </div>
+{% else %}
+    <div class=" row  mb-3">
+        <label class="form-label col-md-3" for="{{ id }}">
+            {{field.label}}
+        </label>
+        <div class="col-md-9">    
+            <input {% if required %}required{% endif %}
+                name="{{ name }}"
+                {% if placeholder %}placeholder="{{ placeholder }}"{% endif %} 
+                class="{% if errors %}is-invalid{% endif %} form-control rounded-3 col-md-9"
+                id="{{ id }}"
+                {% if readonly %}readonly{% endif %}
+                {% if disabled %}disabled{% endif %}
+                {% if tabindex %}tabindex="{{ tabindex }}"{% endif %}
+                {% if style %}style="{{ style }}"{% endif %}
+                {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %}
+                {% if value is not None %}value="{{ value }}"{% endif %}
+                type="{{ type }}">
+        </div>
+        {% if help_text %}
+            <div class="form-text">
+                {{field.help_text}}
+            </div>
+        {% endif %}
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endif %}

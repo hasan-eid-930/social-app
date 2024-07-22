@@ -1,9 +1,7 @@
 {% extends "layouts/a.html" %}
 {% block content %}
-    {% for post in posts  %}
-     <div class="mb-3">
+
+     <div>
         {% include "posts/post.html" %}
      </div>
-    {% endfor %}
 {% endblock content %}
-    

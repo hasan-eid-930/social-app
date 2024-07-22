@@ -1,0 +1,32 @@
+
+{% load static %}
+  <div class="card shadow">
+    <div class="card-header">
+      <img src="{% static "images/yt downloader.jpg" %}" class="rounded-circle profile-image me-2" alt="...">
+      <span>{{post.author.username}}</span>
+    </div>
+    <div class="card-body">
+      <a href="{% url "post" post.id%}">
+        <img class="img-fluid mb-2" src="{{post.image.url}}"  alt="...">
+      </a>
+      <p class="card-text">{{post.body}}</p>
+  
+    </div>
+    <div class="card-footer text-body-secondary">
+      <div class="d-flex px-2 ">
+        <a href="" class="text-decoration-none text-reset">
+          33 <i class="bi bi-heart-fill mx-2"></i>
+        </a>
+        <a href="{% url "post" post.id%}" class="text-decoration-none text-reset">
+          55 <i class="bi bi-chat "></i>
+        </a>
+        <div class="dropdown-center ms-auto ">
+          <i class="bi bi-three-dots" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url "post-delete" post.id %}">delete</a></li>
+            <li><a class="dropdown-item" href="{% url "post-edit" post.id %}">edit</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
