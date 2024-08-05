@@ -1,0 +1,27 @@
+{% load static %}
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="mb-3 row">
+    <label for="search-input" class="col-sm-1 col-form-label">To</label>
+    <div class="col-sm-11">
+        <input type="search" class="form-control" name="user_search" id="search-input"
+            hx-get="{% url "search-user" %}"
+            hx-target="#search-results"
+            hx-trigger="keyup changed"
+            hx-swap="innerHTML"
+        >
+    </div>
+</div>
+<div id="search-results" class="list-group">
+    
+</div>

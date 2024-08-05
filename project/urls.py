@@ -8,6 +8,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('posts.urls')),
     path('accounts/', include('allauth.urls')),
+    path('profile/', include('users.urls')),
+    path('inbox/', include('inbox.urls')),
 
 ]
 # used to serve media files in development

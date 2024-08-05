@@ -1,0 +1,43 @@
+{% extends "layouts/a.html" %}
+{% load post_tags %}
+{% block content %}
+
+   <div>
+      {% include "posts/post.html" %}
+      {% if user.is_authenticated %}
+         <div class=" p-3 shadow mt-3">
+            <form class="d-flex align-items-center" 
+               hx-post="{% url "comment-create" post.id %}"
+               hx-target="#comments"
+               hx-swap="afterbegin"
+               _="on htmx:afterRequest reset() me"
+               >
+               {% csrf_token %}
+               <div class="flex-grow-1">
+                  {%form_tag form%}
+               </div>
+               <input class="btn ms-2 btn-success " type="submit" value="Add">
+            </form>
+         </div>
+      {% endif %}
+      
+      <div id="tabs" class="my-4 {% if not post.comments.count %}d-none{% endif %} "
+         hx-target="#comments" 
+         hx-swap="innerHTML" 
+         _="on htmx:afterOnLoad take .active for event.target"
+         >
+         <a hx-get="{% url "post" post.id %}" class="btn btn-outline-secondary active">Newest First</a>
+         <a hx-get="{% url "post" post.id %}?top" class="btn btn-outline-secondary">Top Comments</a>
+      </div>
+      
+      <div id="comments">
+         {% for comment  in post.comments.all %}
+            {% if not comment.parent_comment %}
+               <div class="mb-2">
+                  {% include "posts/comment.html" %}
+               </div>
+            {% endif %}
+         {% endfor %}
+      </div>
+   </div>
+{% endblock content %}

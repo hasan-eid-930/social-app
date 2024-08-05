@@ -1,0 +1,35 @@
+{% load static %}
+
+
+
+
+
+
+<div class="list-group"
+    _="on htmx:afterOnLoad take .active for event.target"
+>
+    {% for c in my_conversations %}
+    <a class="list-group-item list-group-item-action list-group-item-light  mb-2 p-2 rounded-2"
+        hx-get="{% url "conversation" c.id %}"
+        hx-target="#conversation"
+        hx-swap='innerHTML'
+        >
+        {% for participant in c.participants.all %}
+            {% if participant != user %}
+                <span class=" position-relative" 
+                    hx-get="{% url "check-notification" c.id %}"
+                    hx-trigger="load"
+                    hx-target="#notification-{{c.id}}"
+                    hx-swap="innerHTML"
+                    >
+                    <img class="object-fit-cover rounded-circle small-profile-img  me-2" src="{{participant.profile.avatar}}" alt=""/>
+                    <span id='notification-{{c.id}}'>
+                    </span>
+                </span>
+                <span>{{participant.profile.name}}</span>
+            
+            {% endif %} 
+        {% endfor %}
+    </a>
+    {% endfor %}
+</div>

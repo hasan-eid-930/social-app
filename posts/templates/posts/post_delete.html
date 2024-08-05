@@ -1,0 +1,23 @@
+{% extends "layouts/c.html" %}
+{% block content %}
+ <div class="row align-items-center">
+     <div class="mb-5 mb-md-0 col-md-6">
+         <h5>Delete Post</h5>
+         <hr>
+         <p>
+             are you sure you want to delete post ?
+         <p>
+         <form  method="post" action="{% url "post-delete" post.id %}">
+             {% csrf_token %}
+             <input class="btn btn-danger" type="submit" value="Confirm">
+             <a class="btn btn-secondary" href="{{ request.META.HTTP_REFERER }}" >
+                 Cancle
+             </a>
+             
+         </form>
+     </div>
+    <div class="col-md-6">
+        {% include "posts/post.html" %}
+    </div>
+</div>
+{% endblock content %}

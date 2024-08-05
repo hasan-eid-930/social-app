@@ -1,0 +1,92 @@
+{% load post_tags %}
+
+{% load static %}
+
+
+
+
+
+
+
+
+
+
+<div class=" card shadow">
+    <div class="card-header">
+    <a class="text-reset  text-decoration-none" href="{% url "user-profile" comment.author.username %}">
+        <img class="object-fit-cover rounded-circle profile-image-sm profile-image-lg  me-2" src="{{comment.author.profile.avatar}}" alt="{{comment.author.profile.name}}">
+    </a>
+    <span>{{comment.author.profile.name}}</span>
+    <span class="text-secondary">@{{comment.author.username}}</span>
+    </div>
+    <div class="card-body">
+    <p class="card-text">{{comment.body}}</p>
+    </div>
+    
+    <div class="card-footer text-body-secondary">
+    <div class="d-flex px-2 justify-content-between">
+        {% if comment.likes.count or  user.is_authenticated and user != comment.author %}
+        <a  
+            {% comment %} to prevent non-auth user from making any auth-required htmx request{% endcomment %}
+            {% if user.is_authenticated %}
+            hx-get={% url "comment-like" comment.id %}
+            {% else %}
+            href="{% url "account_login" %}?next={{request.path}}"
+            {% endif %}
+            class="cursor-pointer text-decoration-none text-reset">
+          {% include "posts/partials/likes.html" with model=comment %}
+        </a>
+        {% endif %}
+        <a id="comment-{{comment.id}}" onclick="toggleRelpies('{{comment.id}}')" class="text-decoration-none text-reset">
+            {% if comment.replies.count %}
+            <span>{{comment.replies.count}}</span>
+            replies
+            {% else %}
+            {% if user.is_authenticated %}
+            Add reply
+            {% endif %}
+            {% endif %}
+            {% if comment.replies.count %}
+            <i id="right-{{comment.id}}" class="bi bi-caret-right-fill d-inline"></i>
+            <i id="down-{{comment.id}}" class="bi bi-caret-down-fill d-none"></i>
+            {% endif %}
+        </a>
+        {% if user.is_authenticated and user == comment.author %}
+        <div class="dropdown-center">
+            <i class="bi bi-three-dots" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
+            <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url "comment-delete" comment.id %}">delete</a></li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    </div>
+    <div  id="replies-{{comment.id}}" class="d-none" >
+        {% if user.is_authenticated %}
+         <div hx-target="next .replies" class=" p-3 shadow mt-3 ">
+             <form class=" add-comment d-flex align-items-center" 
+                hx-post="{% url "reply-create" post_pk=comment.parent_post.id comment_pk=comment.id %}"
+                hx-swap="afterbegin"
+                _="on htmx:afterRequest reset() me">
+               {% csrf_token %}
+               <div class="flex-grow-1">
+                  {%form_tag form%}
+               </div>
+               <input class="btn ms-2 btn-success " type="submit" value="Add">
+            </form>
+         </div>
+        {% endif %}
+
+        <div  class="replies {% if comment.replies.count %}mt-3 p-2 {% endif %}">
+            {% for reply  in comment.replies.all %}
+            <div class="col-11 offset-1
+                {% if not forloop.last %}mb-2{% endif %}
+            ">
+                {% include "posts/comment.html" with comment=reply %}
+            </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+</div>
+

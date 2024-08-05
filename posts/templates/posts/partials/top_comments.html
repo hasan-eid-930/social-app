@@ -1,0 +1,26 @@
+
+
+
+
+
+
+
+
+<div id="profile-posts" class="op-0 col-md-10 mx-md-auto mt-3"
+    _="on load transition my opacity to 1 over 0.2 seconds"
+    >
+    {% if comments %}
+        {% for comment in comments %}
+            <div class="d-flex mb-2">
+                <a href="{% url "post" comment.parent_post.id %}" class="text-reset  text-decoration-none" >
+                    <img class="object-fit-cover rounded-3 profile-image me-2" src="{{comment.parent_post.image.url}}" />
+                </a>
+                <div class="flex-grow-1">
+                    {% include "posts/comment.html" %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-center">There are no comments</p>
+    {% endif %}
+</div>

@@ -1,0 +1,18 @@
+{% extends "layouts/b.html" %}
+{% load post_tags %}
+{% block content %}
+ <div >
+    <h4>Edit Post</h4>
+    <hr>
+    <form  method="post" action="{% url "post-edit" post.id %}">
+        {% csrf_token %}
+        {%form_tag form%}
+        <hr>
+        <input class="btn btn-success" type="submit" value="Submit">
+        <a class="btn btn-danger" href="{{ request.META.HTTP_REFERER }}" >
+            Cancle
+        </a>
+        
+    </form>
+</div>
+{% endblock content %}

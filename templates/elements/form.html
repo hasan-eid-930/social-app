@@ -1,0 +1,43 @@
+{% load post_tags %}
+
+{% for err in form.non_field_errors %}
+    <div class="alert alert-danger">{{ err }}</div>
+{% endfor %}
+{% for hidden in form.hidden_fields %}
+    {{ hidden }}
+{% endfor %}
+{% for field in form.visible_fields %}
+    <div class="row {% if not forloop.last %}mb-3{% endif %}">
+        {% if field.label %}
+            <label class="form-label col-md-3" for="{{ field.id_for_label }}">
+                {{field.label}}
+            </label>    
+        {% endif %}
+        <div class="{% if field.label %}col-md-9{% endif %}">
+            {%widget_type as w_type %}
+            {% if w_type == 'CheckboxSelectMultiple' %}
+            
+                {% for checkbox in field %}
+                    {{ checkbox.tag }}
+                    <label class="btn btn-outline-secondary rounded-pill me-2" for="{{ checkbox.id_for_label }}">
+                        {{ checkbox.choice_label }}
+                    </label>
+                {% endfor %}
+            
+            {% else %}
+                {{field}}
+            {% endif %}
+        </div>
+        {% if help_text %}
+            <div class="form-text">
+                {{field.help_text}}
+            </div>
+        {% endif %}
+        {% if field.errors %}
+        {% for error in field.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+    </div>    
+{% comment %} {% include "elements/field.html" with name=field.name type=field.field.widget.input_type required=field.field.required value=field.value id=field.auto_id errors=field.errors placeholder=field.field.widget.attrs.placeholder tabindex=field.field.widget.attrs.tabindex autocomplete=field.field.widget.attrs.autocomplete style=field.field.widget.attrs.style %} {% endcomment %}
+{% endfor %}

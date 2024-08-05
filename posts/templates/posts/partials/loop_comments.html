@@ -1,0 +1,9 @@
+<div id="comments" class="op-0" _="on load transition my opacity to 1 over 0.2 seconds">
+    {% for comment  in comments %}
+        {% if not comment.parent_comment %}
+            <div class='mb-2'>
+                {% include "posts/comment.html" %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>

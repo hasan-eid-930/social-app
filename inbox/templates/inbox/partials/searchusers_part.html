@@ -1,0 +1,12 @@
+{% for search_user  in users %}
+    <a class="list-group-item list-group-item-action list-group-item-light  mb-2 p-2 rounded-2"
+        hx-get="{% url "new-message" search_user.username %}"
+        hx-target="#new-message"
+        hx-swap="innerHTML"
+        >
+        <img class="object-fit-cover rounded-circle small-profile-img  me-2" src="{{search_user.profile.avatar}}" alt=""/>
+        <b>{{search_user.profile.name}}</b>
+        <span class="text-secondary">@{{search_user.username}}</span>
+    </a>
+{% endfor %}
+

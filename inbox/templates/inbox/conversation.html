@@ -1,0 +1,44 @@
+{% load static %}
+{% load post_tags %}
+
+
+
+
+
+
+
+
+<div   class="d-flex h-100 align-items-start flex-column p-3 ">
+    <div class="d-flex justify-content-center p-2 mb-auto w-100">
+        {% for participant in conversation.participants.all %}
+           {% if participant != user %}
+            <div class="text-center mx-2">
+                <img class="object-fit-cover profile-image rounded-circle" src="{{participant.profile.avatar}}" alt="">
+                <h5 class="mt-2">{{participant.profile.name}}</h5>
+                <div class="mt-2 text-secondary">@{{participant.username}}</div>
+            </div>
+           {% endif %} 
+        {% endfor %}
+    </div>
+    <div id='messages' class="w-100">
+        {% for message in conversation.messages.all%}
+            <div>
+                {% include "inbox/message.html" %}
+            </div>    
+        {% endfor %}
+    </div>
+    <div class=" p-3 shadow mt-2 w-100">
+        <form class="d-flex align-items-center" 
+           hx-post="{% url "send-reply" conversation.id %}"
+           hx-target="#messages"
+           hx-swap="beforeend"
+           _="on htmx:afterRequest reset() me"
+           >
+           {% csrf_token %}
+           <div class="flex-grow-1">
+              {%form_tag form%}
+           </div>
+           <input class="btn ms-2 btn-success " type="submit" value="send">
+        </form>
+     </div>
+</div>

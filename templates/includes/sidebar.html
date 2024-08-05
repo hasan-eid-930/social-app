@@ -1,1 +1,47 @@
-<h1>sidebar</h1>
+
+
+
+
+
+
+
+<div class=" col-md-3">
+   <div class="shadow p-2 rounded-3">
+        <h4 >Categories</h4>
+        <div>
+            {% for category in categories  %}
+                    <div class="p-2 rounded-2 {% if category.slug == tag.slug %} bg-secondary bg-opacity-50{% endif %} ">
+                        <img width=25 src="{{category.image.url}}" alt="{{category.name}}" class"profile-image">
+                        <a class="text-decoration-none text-reset ms-2" href="{% url "category" category.slug %}">{{category.name}}</a>
+                    </div>
+            {% endfor %} 
+        </div>
+   </div>
+   <div class="shadow p-2 rounded-3 mt-3">
+        <h4 >Top Posts</h4>
+        <div>
+            {% for post in top_posts  %}
+                    <a href="{% url "post" post.id %}" class=" fs-6 d-flex align-items-center p-2 rounded-2 text-decoration-none text-reset">
+                        <img class=" object-fit-cover rounded-3 profile-image-sm profile-image-lg me-2" src="{{post.image.url}}" alt="{{post.title}}" />
+                        <img class="small-profile-img object-fit-cover rounded-circle me-2" src="{{post.author.profile.avatar}}" />
+                        <div class="me-2">{{post.author.profile.name|truncatechars:10}}</div>
+                        <span class="{% if user in post.likes.all %}fw-bold{% endif %} ms-auto" >{{post.likes.count}} like{{ post.likes.count|pluralize }} / {{post.comments.count}}</span>
+                        
+                    </a>
+            {% endfor %} 
+        </div>
+   </div>
+   <div class="shadow p-2 rounded-3 mt-3">
+        <h4 >Top Comments</h4>
+        <div>
+            {% for comment in top_comments  %}
+                    <a href="{% url "post" comment.parent_post.id %}" class=" d-flex align-items-center p-2 rounded-2 text-decoration-none text-reset">
+                        <img class="small-profile-img object-fit-cover rounded-circle me-2" src="{{comment.author.profile.avatar}}" />
+                        <div  >{{comment.body|truncatechars:15}}</div>
+                        <span class="{% if user in comment.likes.all %}fw-bold{% endif %} ms-auto" >{{comment.likes.count}} like{{ post.likes.count|pluralize }} / {{comment.replies.count}}</span>
+                        
+                    </a>
+            {% endfor %} 
+        </div>
+   </div>
+</div>
