@@ -55,6 +55,7 @@ class Tag(models.Model):
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='comments')
     parent_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    parent_comment=models.ForeignKey('Comment', on_delete=models.CASCADE,null=True, blank=True, related_name='replies')
     body = models.CharField(max_length=150)
     likes = models.ManyToManyField(User, related_name='likedcomments', through='LikedComment')
     created = models.DateTimeField(auto_now_add=True)

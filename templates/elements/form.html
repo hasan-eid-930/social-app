@@ -7,17 +7,19 @@
     {{ hidden }}
 {% endfor %}
 {% for field in form.visible_fields %}
-    <div class="row mb-3">
-        <label class="form-label col-md-3" for="{{ field.id_for_label }}">
-            {{field.label}}
-        </label>    
-        <div class="col-md-9">
+    <div class="row {% if not forloop.last %}mb-3{% endif %}">
+        {% if field.label %}
+            <label class="form-label col-md-3" for="{{ field.id_for_label }}">
+                {{field.label}}
+            </label>    
+        {% endif %}
+        <div class="{% if field.label %}col-md-9{% endif %}">
             {%widget_type as w_type %}
             {% if w_type == 'CheckboxSelectMultiple' %}
             
                 {% for checkbox in field %}
-                    <label class="me-2" for="{{ checkbox.id_for_label }}">
-                        <span  >{{ checkbox.tag }}</span>
+                    {{ checkbox.tag }}
+                    <label class="btn btn-outline-secondary rounded-pill me-2" for="{{ checkbox.id_for_label }}">
                         {{ checkbox.choice_label }}
                     </label>
                 {% endfor %}

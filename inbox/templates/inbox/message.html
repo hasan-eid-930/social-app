@@ -1,0 +1,23 @@
+
+
+
+
+
+
+
+
+
+<div class="d-flex mb-2">
+    <a href="{% url "user-profile" message.sender.username %}" class="text-reset  text-decoration-none">
+        <img class="object-fit-cover rounded-circle small-profile-img  me-2" src="{{message.sender.profile.avatar}}" alt=""/>
+    </a>
+    <div class="border rounded-3 p-3 flex-grow-1">
+        <div class=" d-flex mb-2">
+            <b>{{message.sender.profile.name}}</b>
+            <span class="text-secondary">@{{message.sender.username}}</span>
+            <span class="text-secondary ms-auto">{{ message.created|timesince }} ago</span>
+            
+        </div>
+        <p> {{message.body_decrypted}} </p>
+    </div>
+</div>

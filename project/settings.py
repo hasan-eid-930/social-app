@@ -17,7 +17,7 @@ STAGING = env('STAGING', default='False')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
-
+ENCRYPT_KEY=b'oQcAet8Obj4HImx9KhXZE9RHAV-i1DfJ6-hBjcJS800='
 # SECURITY WARNING: don't run with debug turned on in production!
 if ENVIRONMENT == 'development':
     DEBUG = True
@@ -54,6 +54,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.twitter',
     'allauth.socialaccount.providers.twitter_oauth2',
     'posts',
+    'users',
+    "inbox",
+    'django_cleanup.apps.CleanupConfig',
+    "django_htmx",
 ]
 # SITE_ID = 1
 MIDDLEWARE = [
@@ -66,6 +70,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # Add the account middleware:
     "allauth.account.middleware.AccountMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -212,5 +217,10 @@ LOGIN_REDIRECT_URL = '/'
 # used if we need authentication using email
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
-
-# ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_USERNAME_BLACKLIST = [ 'admin', 'accounts', 'profile', 'category', 'post', 'inbox', 'theboss','edit' ,'delete','create']
+ACCOUNT_SIGNUP_REDIRECT_URL="profile-onboarding"
+ACCOUNT_LOGIN_BY_CODE_ENABLED=True
+# ACCOUNT_EMAIL_VERIFICATION= "mandatory"
+# ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION=True    
+# use it when confirmation "mandatory" and need to redirect to onboarding
+# ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL="/profile/onboarding/"

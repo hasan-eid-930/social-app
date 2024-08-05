@@ -1,0 +1,17 @@
+{% if conversation.is_seen %}
+    <span id='notification-{{conversation.id}}' hx-swap-oob=true>
+    </span>
+    <span id='inbox-notify' hx-swap-oob=true>
+    </span>
+{% endif %}
+
+
+{% if conversation %}
+    {% include "inbox/conversation.html" %}
+{% else %}
+    <div class="text-center d-flex h-100 align-items-center p-3 ">
+        <div class="flex-grow-1">
+            select conversation from conversations list
+        </div>
+    </div>
+{% endif %}

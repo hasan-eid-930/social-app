@@ -39,8 +39,8 @@
     {% if LOGIN_BY_CODE_ENABLED %}
         {% element hr %}
         {% endelement %}
-        {% element h5 %}
-            {% element button href=request_login_code_url tags="prominent,login,secondary" %}
+        {% element h5 class="text-center"%}
+            {% element button href=request_login_code_url tags="prominent,login,success" %}
                 {% trans "Mail me a sign-in code" %}
             {% endelement %}
         {% endelement %}

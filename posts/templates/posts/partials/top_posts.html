@@ -1,0 +1,26 @@
+
+
+
+
+
+
+
+
+<div id="profile-posts" class="op-0 col-md-10 mx-md-auto row align-items-stretch mt-3 gy-3 row-cols-1
+    {% if posts.count >= 3%}
+    row-cols-sm-2 g-sm-3 row-cols-lg-3 
+    {% elif posts.count == 2 %}
+    row-cols-sm-2 g-sm-3
+    {% endif %} "
+    _="on load transition my opacity to 1 over 0.2 seconds"
+    >
+    {% if posts %}
+        {% for post in posts %}
+            <div class="col d-flex flex-grow-0 align-items-stretch">
+                {% include "posts/post.html" with post=post%}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-center">There are no posts</p>
+    {% endif %}
+</div>

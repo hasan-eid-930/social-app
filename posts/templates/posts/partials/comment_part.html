@@ -1,0 +1,56 @@
+{% with parent_comment=comment.parent_comment %}
+  
+  <div id="tabs" class="my-4 {% if not post.comments.count %}d-none{% endif %} "
+  hx-target="#comments" 
+  hx-swap="innerHTML" 
+  _="on htmx:afterOnLoad take .active for event.target"
+  >
+    <a hx-get="{% url "post" post.id %}" class="btn btn-outline-secondary active">Newest First</a>
+    <a hx-get="{% url "post" post.id %}?top" class="btn btn-outline-secondary">Top Comments</a>
+  </div>
+
+
+  <a  id="post-comment" 
+      href="{% url "post" post.id%}" 
+      class="text-decoration-none text-reset"
+      hx-swap-oob="true"
+      >
+      {% if post.comments.count %}
+        <span>{{post.comments.count}}</span>
+        <i class="bi bi-chat "></i>
+      {% else %}
+        {% if user.is_authenticated %}
+        Add comment
+        {% endif %}
+      {% endif %}
+  </a>
+
+
+
+  {% if parent_comment %}
+      <a  id="comment-{{parent_comment.id}}" 
+          onclick="toggleRelpies('{{comment.id}}')" 
+          class="text-decoration-none text-reset"
+          hx-swap-oob="true"
+          >
+          {% if parent_comment.replies.count %}
+          <span>{{parent_comment.replies.count}}</span>
+          replies
+          {% else %}
+          {% if user.is_authenticated %}
+          Add reply
+          {% endif %}
+          {% endif %}
+          <i id="right-{{parent_comment.id}}" class="bi bi-caret-right-fill d-inline"></i>
+          <i id="down-{{parent_comment.id}}" class="bi bi-caret-down-fill d-none"></i>
+      </a>
+  {% endif %}
+
+
+  <div class="{% if parent_comment %}col-11 offset-1{% endif %} mb-2 op-0 mt-n1"
+      _="on load transition my margin-top to 0 over 0.2 seconds then transition my opacity to 1 over 0.4 seconds"
+      >
+      {% include "posts/comment.html" with comment=comment %}
+  </div>
+
+{% endwith %}

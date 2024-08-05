@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load post_tags %}
 
 {% block layout %}
-    {% include "includes/sidebar.html" %}
-    {% include "includes/hero.html" %}
+<div class="d-flex p-5">
     <div class="mx-auto col-sm-6 ">
         {% block content %}
         {% endblock content %}
     </div>
-
+    {%sidebar_tag tag  user%}
+</div>
 {% endblock layout %}

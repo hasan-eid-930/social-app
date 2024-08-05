@@ -1,0 +1,20 @@
+
+
+
+
+
+
+
+
+{% if model.likes.count %}
+<span>{{model.likes.count}} </span>
+<i class="{% if user in model.likes.all %}text-danger{% endif %} bi bi-heart-fill mx-2 "></i>
+{% endif %}
+{% if user.is_authenticated and user != model.author %}
+{% if user in model.likes.all %}
+    <b >liked</b>
+{% else %}
+    <span class="text-muted">Like</span>
+{% endif %}
+
+{% endif %}

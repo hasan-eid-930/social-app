@@ -1,0 +1,30 @@
+{% load post_tags %}
+
+
+
+
+
+
+
+
+
+<div class="d-flex align-items-center">
+    <div>To: </div>
+    <div class=" p-2 rounded-2">
+        <img class="object-fit-cover rounded-circle small-profile-img  me-2" src="{{recipient.profile.avatar}}" alt=""/>
+        <b>{{recipient.profile.name}}</b>
+        <span class="text-secondary">@{{recipient.username}}</span>
+    </div>
+</div>
+<form  method="post" action="{% url "new-message" recipient.username %}" >
+    {% csrf_token %}
+    <div class="mb-2" >
+        {%form_tag form%}
+    </div>
+    <input class="btn btn-success" type="submit" value="Send">
+    <a class="btn btn-secondary" href="{{ request.META.HTTP_REFERER }}" >
+        Cancle
+    </a>
+</form>
+
+    

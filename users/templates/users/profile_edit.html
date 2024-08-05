@@ -1,0 +1,57 @@
+{% extends "layouts/b.html" %}
+{% load static %}
+{% load post_tags %}
+{% block content %}
+
+
+
+
+
+
+
+<div >
+    <h4>Edit Profile</h4>
+    <hr>
+    <div class="text-center mb-5">
+        <img id="profile-img" class="object-fit-cover profile-image rounded-pill" src="{{user.profile.avatar}}" alt="{{profile.name}}">
+        <h2 id="profile-name" class="mt-2">{{user.profile.name}}</h2>
+        <div class="mt-2 text-secondary">@{{user.username}}</div>
+    </div>
+    <form  method="post" action="{% url "profile-edit" %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {%form_tag form%}
+        <hr>
+        <input class="btn btn-success" type="submit" value="Submit">
+        <a class="btn btn-secondary" href="{{ request.META.HTTP_REFERER }}" >
+            Cancle
+        </a>
+    </form>
+    <hr>
+    <a class="btn btn-danger" href="{% url "profile-delete" %}" >
+        Delete profile
+    </a>
+
+</div>
+{% endblock content%}
+{% block javascript %}
+ <script>
+    // this section for profile
+    const img = document.getElementById('profile-img');
+    const img_input = document.getElementById('profile-img-input');
+    // how to add file input to img when value changed
+    img_input.addEventListener('change', function(e) {
+        file=this.files[0]
+        //how to check if file is image
+        if(file && file.type.match('image.*')){
+            // create url for file and assign it to img.src
+            img.src = URL.createObjectURL(this.files[0]);
+        }
+        })
+    const profile_name= document.getElementById('profile-name');
+    const profile_name_input = document.getElementById('profile-name-input');
+
+    profile_name_input.addEventListener('input', function(e) {
+        profile_name.innerHTML = this.value;
+        })
+ </script>
+{% endblock javascript %}
